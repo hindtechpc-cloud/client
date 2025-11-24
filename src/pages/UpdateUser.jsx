@@ -19,7 +19,7 @@ export default function UpdateUser({ userAdded, setUserAdded,oldUser,setIsFormOp
     setLoading(true);
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/${oldUser.id}/update-user`,
+        `http://localhost:5000/api/${oldUser._id}/update-user-to-mongo`,
         user
       );
       console.log(res);

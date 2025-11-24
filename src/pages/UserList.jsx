@@ -7,9 +7,9 @@ export default function UserList({ userAdded, setUserAdded }) {
 
   const loadUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/get-users");
+      const res = await axios.get("http://localhost:5000/api/get-mongo-date");
       console.log(res);
-      setUsers(res.data.users);
+      setUsers(res.data.user);
     } catch (error) {
       console.log(error);
     }

@@ -10,10 +10,11 @@ export default function AddUser({ userAdded, setUserAdded }) {
     salary: "",
     image: "",
   });
-
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
+    setErrors({});
     const { name, value } = e.target;
 
     setUser(() => {
@@ -25,7 +26,10 @@ export default function AddUser({ userAdded, setUserAdded }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/add-user", user);
+      const res = await axios.post(
+        "http://localhost:5000/api/add-user-to-mongo",
+        user
+      );
       console.log(res);
       if (res.status == 201) {
         setLoading(false);
@@ -40,12 +44,26 @@ export default function AddUser({ userAdded, setUserAdded }) {
           image: "",
         });
       }
+      if (res.status == 422) {
+        setErrors(res.data);
+      }
     } catch (error) {
       setLoading(false);
+      setErrors(error.response.data);
+      setErrors(() => {
+        return {
+          ...errors,
+          errors: error.response.data.forEach((err) => {
+            return (errors[err.path] = err.msg);
+          }),
+        };
+      });
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
-
+  console.log(errors);
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -56,6 +74,16 @@ export default function AddUser({ userAdded, setUserAdded }) {
           placeholder="Enter your name..."
           value={user.name}
         />
+        {errors.name && (
+          <p
+            className="text-red-500"
+            style={{
+              color: "red",
+            }}
+          >
+            {errors.name}
+          </p>
+        )}
         <input
           type="email"
           onChange={handleChange}
@@ -63,6 +91,16 @@ export default function AddUser({ userAdded, setUserAdded }) {
           placeholder="Enter your email..."
           value={user.email}
         />
+        {errors.email && (
+          <p
+            className="text-red-500"
+            style={{
+              color: "red",
+            }}
+          >
+            {errors.email}
+          </p>
+        )}
         <input
           type="text"
           onChange={handleChange}
@@ -70,6 +108,16 @@ export default function AddUser({ userAdded, setUserAdded }) {
           placeholder="Enter your salary..."
           value={user.salary}
         />
+        {errors.salary && (
+          <p
+            className="text-red-500"
+            style={{
+              color: "red",
+            }}
+          >
+            {errors.salary}
+          </p>
+        )}
         <input
           type="text"
           onChange={handleChange}
@@ -77,6 +125,16 @@ export default function AddUser({ userAdded, setUserAdded }) {
           placeholder="Enter your address..."
           value={user.address}
         />
+        {errors.address && (
+          <p
+            className="text-red-500"
+            style={{
+              color: "red",
+            }}
+          >
+            {errors.address}
+          </p>
+        )}
         <input
           type="text"
           onChange={handleChange}
@@ -91,6 +149,19 @@ export default function AddUser({ userAdded, setUserAdded }) {
           placeholder="Enter your image..."
           value={user.image}
         />
+        {errors.image && (
+          <p
+            className="text-red-500"
+            style={{
+              color: "red",
+            }}
+          >
+            {errors.image}
+          </p>
+        )}
+        {errors?.length > 0 && (
+          <p className="text-red-500">Error to submiting form</p>
+        )}
         <button>{loading ? "submiting..." : "Submit"}</button>
       </form>
     </div>
