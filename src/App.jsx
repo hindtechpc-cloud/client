@@ -3,6 +3,7 @@ import AddUser from "./pages/AddUser";
 import React, { useEffect, useState } from "react";
 import UserList from "./pages/UserList";
 import UserCard from "./components/UserCard";
+import Form from "./pages/Form";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -20,16 +21,16 @@ export default function App() {
     }
   };
 
-  useEffect(() => {
-    loadUserData();
-  }, []);
+  // useEffect(() => {
+  //   loadUserData();
+  // }, []);
 
   return (
     <div>
-      <UserCard user={user} />
-
-      <AddUser setUserAdded={setUserAdded} userAdded={userAdded} />
-      <UserList userAdded={userAdded} setUserAdded={setUserAdded}/>
+      {/* <UserCard user={user} /> */}
+<Form/>
+      {/* <AddUser setUserAdded={setUserAdded} userAdded={userAdded} />
+      <UserList userAdded={userAdded} setUserAdded={setUserAdded}/> */}
     </div>
   );
 
