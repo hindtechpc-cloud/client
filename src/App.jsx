@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import UserList from "./pages/UserList";
 import UserCard from "./components/UserCard";
 import Form from "./pages/Form";
+import Employee from "./pages/Employee";
 
 export default function App() {
   const [user, setUser] = useState({});
@@ -29,6 +30,7 @@ export default function App() {
     <div>
       {/* <UserCard user={user} /> */}
 <Form/>
+<Employee/>
       {/* <AddUser setUserAdded={setUserAdded} userAdded={userAdded} />
       <UserList userAdded={userAdded} setUserAdded={setUserAdded}/> */}
     </div>
