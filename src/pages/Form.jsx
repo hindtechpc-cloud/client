@@ -23,7 +23,6 @@ const schema = z.object({
     .regex(/[_%+-]/, "atleast one spacial charactor "),
   phone: z
     .string()
-
     .min(10, "please enter 10 digits")
     .max(10, "please enter max 10 digits")
     .regex(/[0-9]{10}/, "please enter valid phone number "),

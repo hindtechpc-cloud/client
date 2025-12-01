@@ -121,7 +121,6 @@ export default function Employee() {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-  
     prepareRow,
     page,
     pageCount,
